@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@theme {
+  --font-headline: "Lexend", sans-serif;
+  --font-body: "Lexend", sans-serif;
+  --font-label: "Lexend", sans-serif;
+
+  /* Default (Light) Theme */
+  --color-surface: #fdfbff;
+  --color-on-surface: #1a1c1e;
+  --color-surface-variant: #e1e2ec;
+  --color-on-surface-variant: #44474f;
+  --color-surface-container: #f1f0f4;
+  --color-surface-container-low: #f7f6fa;
+  --color-surface-container-high: #ebe9ee;
+  --color-surface-container-highest: #e5e3e8;
+  --color-surface-container-lowest: #ffffff;
+  --color-primary: #005ac1;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #d8e2ff;
+  --color-on-primary-container: #001a41;
+  --color-secondary: #575e71;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #dbe2f9;
+  --color-on-secondary-container: #141b2c;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #410002;
+  --color-outline: #74777f;
+  --color-outline-variant: #c4c6d0;
+  --color-background: #fdfbff;
+  --color-on-background: #1a1c1e;
+
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+}
+
+/* Accessibility Classes */
+.dyslexia-font {
+  font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
+}
+
+.high-contrast {
+  --color-surface: #000000;
+  --color-on-surface: #ffffff;
+  --color-primary: #ffff00;
+  --color-on-primary: #000000;
+  --color-outline: #ffffff;
+  --color-surface-container: #111111;
+  --color-surface-container-high: #222222;
+  --color-on-surface-variant: #ffffff;
+}
+
+.large-text {
+  font-size: 1.25rem; /* 20px base */
+}
+
+.reduced-animation * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Dark Theme Overrides */
+.dark {
+  --color-surface: #0e1323;
+  --color-on-surface: #dee1f9;
+  --color-surface-variant: #2f3446;
+  --color-on-surface-variant: #c9c4d8;
+  --color-surface-container: #1a1f30;
+  --color-surface-container-low: #161b2b;
+  --color-surface-container-high: #25293a;
+  --color-surface-container-highest: #2f3446;
+  --color-surface-container-lowest: #080d1d;
+  --color-primary: #cabeff;
+  --color-on-primary: #30009a;
+  --color-primary-container: #937dff;
+  --color-on-primary-container: #2a0088;
+  --color-secondary: #b9c3ff;
+  --color-on-secondary: #00228b;
+  --color-secondary-container: #0034c8;
+  --color-on-secondary-container: #a7b4ff;
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+  --color-outline: #938ea1;
+  --color-outline-variant: #484555;
+  --color-background: #0e1323;
+  --color-on-background: #dee1f9;
+}
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-body antialiased transition-colors duration-300;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-surface-variant/70 backdrop-blur-xl;
+  }
+  .primary-gradient {
+    @apply bg-gradient-to-br from-primary to-primary-container;
+  }
+  .luminous-shadow {
+    box-shadow: 0 20px 40px rgba(230, 222, 255, 0.06);
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap');
