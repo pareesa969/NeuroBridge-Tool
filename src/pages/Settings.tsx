@@ -111,7 +111,7 @@ export default function Settings() {
     const doc = new jsPDF();
     
     doc.setFontSize(22);
-    doc.text("Counselling Support Profile", 20, 20);
+    doc.text("NeuroBridge Tools Profile", 20, 20);
     
     doc.setFontSize(14);
     doc.text(`Username: ${fullProfile.user.username}`, 20, 40);
@@ -132,13 +132,13 @@ export default function Settings() {
       y += 10;
     });
 
-    doc.save(`counselling_profile_${username.replace(/\s+/g, '_').toLowerCase()}.pdf`);
+    doc.save(`neurobridge_profile_${username.replace(/\s+/g, '_').toLowerCase()}.pdf`);
   };
 
   const downloadFile = (dataUri: string, ext: string) => {
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataUri);
-    downloadAnchorNode.setAttribute("download", `counselling_profile_${username.replace(/\s+/g, '_').toLowerCase()}.${ext}`);
+    downloadAnchorNode.setAttribute("download", `neurobridge_profile_${username.replace(/\s+/g, '_').toLowerCase()}.${ext}`);
     document.body.appendChild(downloadAnchorNode);
     downloadAnchorNode.click();
     downloadAnchorNode.remove();

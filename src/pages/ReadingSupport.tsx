@@ -34,6 +34,7 @@ export default function ReadingSupport() {
   const [summary, setSummary] = useState<string | null>(null);
   const [isSummarizing, setIsSummarizing] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   const handleSummarize = async () => {
     setIsSummarizing(true);
@@ -42,13 +43,29 @@ export default function ReadingSupport() {
     setIsSummarizing(false);
   };
 
-  const speakText = () => {
+  const toggleSpeech = () => {
     if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(selectedTopic.content);
-      utterance.onstart = () => setIsSpeaking(true);
-      utterance.onend = () => setIsSpeaking(false);
-      window.speechSynthesis.speak(utterance);
+      if (isSpeaking) {
+        if (isPaused) {
+          window.speechSynthesis.resume();
+          setIsPaused(false);
+        } else {
+          window.speechSynthesis.pause();
+          setIsPaused(true);
+        }
+      } else {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(selectedTopic.content);
+        utterance.onstart = () => {
+          setIsSpeaking(true);
+          setIsPaused(false);
+        };
+        utterance.onend = () => {
+          setIsSpeaking(false);
+          setIsPaused(false);
+        };
+        window.speechSynthesis.speak(utterance);
+      }
     }
   };
 
@@ -125,17 +142,19 @@ export default function ReadingSupport() {
                   <h3 className="text-sm font-bold text-secondary uppercase tracking-widest mb-6">Processing Tools</h3>
                   <div className="grid grid-cols-1 gap-3">
                     <button 
-                      onClick={speakText}
+                      onClick={toggleSpeech}
                       className={cn(
                         "flex items-center gap-4 p-4 rounded-xl transition-colors text-left",
                         isSpeaking ? "bg-primary/10 text-primary" : "bg-surface-container-high hover:bg-surface-container-highest"
                       )}
                     >
                       <div className="p-2 bg-secondary/10 text-secondary rounded-lg">
-                        <Icons.Volume className="w-5 h-5" />
+                        {isSpeaking && !isPaused ? <Icons.VolumeX className="w-5 h-5" /> : <Icons.Volume className="w-5 h-5" />}
                       </div>
                       <div>
-                        <p className="font-bold text-sm">Text to Speech</p>
+                        <p className="font-bold text-sm">
+                          {isSpeaking ? (isPaused ? 'Resume Speech' : 'Pause Speech') : 'Text to Speech'}
+                        </p>
                         <p className="text-[10px] text-on-surface-variant uppercase tracking-tighter">Neural Narration</p>
                       </div>
                     </button>

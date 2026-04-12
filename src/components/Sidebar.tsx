@@ -41,7 +41,7 @@ export function Sidebar() {
     <aside className="fixed left-0 top-0 h-full w-72 flex flex-col py-8 bg-surface-container border-r border-outline-variant/10 shadow-xl rounded-r-xl z-50">
       <div className="px-8 mb-10">
         <h1 className="text-xl font-bold bg-gradient-to-br from-primary to-primary-container bg-clip-text text-transparent">
-          Counselling Support
+          NeuroBridge Tools
         </h1>
         <p className="text-xs text-on-surface-variant mt-1 tracking-widest uppercase opacity-70">
           WELLNESS SANCTUARY

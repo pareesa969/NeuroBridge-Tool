@@ -11,7 +11,55 @@ export default function FocusTools() {
   const [timerMinutes, setTimerMinutes] = useState(25);
   const [timeLeft, setTimeLeft] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
-  const [activeSound, setActiveSound] = useState('Rain');
+  const [activeSound, setActiveSound] = useState<string | null>(null);
+  const [volume, setVolume] = useState(0.5);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const soundUrls: Record<string, string> = {
+    'Rain': 'https://assets.mixkit.co/active_storage/sfx/2431/2431-preview.mp3',
+    'White noise': 'https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3',
+    'Cafe': 'https://assets.mixkit.co/active_storage/sfx/1084/1084-preview.mp3',
+    'Forest': 'https://assets.mixkit.co/active_storage/sfx/2432/2432-preview.mp3'
+  };
+
+  useEffect(() => {
+    if (activeSound) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+      const audio = new Audio(soundUrls[activeSound]);
+      audio.loop = true;
+      audio.volume = volume;
+      audio.play().catch(err => console.error("Audio play failed:", err));
+      audioRef.current = audio;
+    } else {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    }
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, [activeSound]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
+  const handleSoundToggle = (sound: string) => {
+    if (activeSound === sound) {
+      setActiveSound(null);
+    } else {
+      setActiveSound(sound);
+    }
+  };
   const [taskInput, setTaskInput] = useState('');
   const [taskSteps, setTaskSteps] = useState<string[]>([]);
   const [isBreakingTask, setIsBreakingTask] = useState(false);
@@ -232,16 +280,22 @@ export default function FocusTools() {
                 </div>
                 <div className="flex items-center gap-3 bg-surface-container-highest p-2 rounded-full">
                   <Icons.Volume className="w-5 h-5 text-on-surface-variant px-2" />
-                  <div className="w-32 h-1.5 bg-surface-container rounded-full overflow-hidden">
-                    <div className="h-full bg-primary w-2/3"></div>
-                  </div>
+                  <input 
+                    type="range" 
+                    min="0" 
+                    max="1" 
+                    step="0.01" 
+                    value={volume} 
+                    onChange={(e) => setVolume(parseFloat(e.target.value))}
+                    className="w-32 h-1.5 bg-surface-container rounded-full appearance-none cursor-pointer accent-primary" 
+                  />
                 </div>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <SoundItem icon={Icons.Rain} label="Rain" active={activeSound === 'Rain'} onClick={() => setActiveSound('Rain')} />
-                <SoundItem icon={Icons.Wind} label="White noise" active={activeSound === 'White noise'} onClick={() => setActiveSound('White noise')} />
-                <SoundItem icon={Icons.Cafe} label="Cafe" active={activeSound === 'Cafe'} onClick={() => setActiveSound('Cafe')} />
-                <SoundItem icon={Icons.Forest} label="Forest" active={activeSound === 'Forest'} onClick={() => setActiveSound('Forest')} />
+                <SoundItem icon={Icons.Rain} label="Rain" active={activeSound === 'Rain'} onClick={() => handleSoundToggle('Rain')} />
+                <SoundItem icon={Icons.Wind} label="White noise" active={activeSound === 'White noise'} onClick={() => handleSoundToggle('White noise')} />
+                <SoundItem icon={Icons.Cafe} label="Cafe" active={activeSound === 'Cafe'} onClick={() => handleSoundToggle('Cafe')} />
+                <SoundItem icon={Icons.Forest} label="Forest" active={activeSound === 'Forest'} onClick={() => handleSoundToggle('Forest')} />
               </div>
             </div>
           </div>

@@ -27,6 +27,40 @@ export default function LearningModule() {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [elapsedTime, setElapsedTime] = useState(0);
+
+  useEffect(() => {
+    if (!quizCompleted && startTime === null && Object.keys(selectedAnswers).length > 0) {
+      setStartTime(Date.now());
+    }
+  }, [selectedAnswers, quizCompleted, startTime]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (startTime && !quizCompleted) {
+      interval = setInterval(() => {
+        setElapsedTime(Math.floor((Date.now() - startTime) / 1000));
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [startTime, quizCompleted]);
+
+  const formatElapsedTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const calculateAccuracy = () => {
+    const answeredCount = Object.keys(selectedAnswers).length;
+    if (answeredCount === 0) return 0;
+    const correctCount = GENERAL_QUESTIONS.reduce((acc, q) => {
+      if (selectedAnswers[q.id] === q.answer) return acc + 1;
+      return acc;
+    }, 0);
+    return Math.round((correctCount / answeredCount) * 100);
+  };
 
   const currentQuestion = GENERAL_QUESTIONS[currentQuestionIndex];
 
@@ -202,11 +236,11 @@ export default function LearningModule() {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center p-4 bg-surface-container rounded-xl">
                     <span className="text-sm font-bold text-on-surface-variant">Time Taken</span>
-                    <span className="font-bold">2:45</span>
+                    <span className="font-bold tabular-nums">{formatElapsedTime(elapsedTime)}</span>
                   </div>
                   <div className="flex justify-between items-center p-4 bg-surface-container rounded-xl">
                     <span className="text-sm font-bold text-on-surface-variant">Accuracy</span>
-                    <span className="font-bold text-primary">--%</span>
+                    <span className="font-bold text-primary">{calculateAccuracy()}%</span>
                   </div>
                 </div>
               </div>

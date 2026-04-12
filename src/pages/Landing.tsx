@@ -20,11 +20,11 @@ export default function Landing() {
           {/* Branding Anchor */}
           <div className="mb-8 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-high border border-outline-variant/20">
             <Icons.AI className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium tracking-wide uppercase text-primary">Counselling Support App</span>
+            <span className="text-sm font-medium tracking-wide uppercase text-primary">NeuroBridge Tools</span>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-extrabold text-on-surface leading-tight tracking-tight mb-6">
-            Counselling Support App
+            NeuroBridge Tools
           </h1>
           
           <p className="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed mb-10">

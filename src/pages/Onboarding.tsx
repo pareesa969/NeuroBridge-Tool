@@ -88,7 +88,7 @@ export default function Onboarding() {
             <span className="bg-gradient-to-br from-primary to-primary-container bg-clip-text text-transparent">Sanctuary</span>
           </h1>
           <p className="text-on-surface-variant text-lg max-w-2xl leading-relaxed">
-            Adjust how our Counselling AI interacts with your wellness profile. These settings help us create a low-friction environment for your unique journey.
+            Adjust how our NeuroBridge Tools AI interacts with your wellness profile. These settings help us create a low-friction environment for your unique journey.
           </p>
         </header>
 

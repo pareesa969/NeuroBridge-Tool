@@ -1,6 +1,11 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+const apiKey = process.env.GEMINI_API_KEY;
+if (!apiKey) {
+  console.warn("GEMINI_API_KEY is not set. AI features will not work until the API key is configured in the Settings > Secrets panel.");
+}
+
+const ai = new GoogleGenAI({ apiKey: apiKey || "dummy-key" });
 
 export async function getAISummary(text: string): Promise<string> {
   try {
