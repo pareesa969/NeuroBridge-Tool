@@ -1,4 +1,4 @@
-# 🧠 LUMINESCENCE AI
+# 🧠 NeuroBridge Tools 
 
 ### Adaptive Learning & Emotional Support System
 
@@ -6,7 +6,7 @@
 
 # Project Title
 
-**LUMINESCENCE AI — Adaptive Learning & Emotional Support Platform**
+**NeuroBridge Tools — Adaptive Learning & Emotional Support Platform**
 
 An AI-powered productivity and learning assistant that adapts to user focus, reading ability, and emotional state.
 
@@ -31,7 +31,7 @@ Users need **one unified AI-powered system** for learning, focus, and productivi
 
 # Solution
 
-LUMINESCENCE AI provides an **adaptive learning environment** powered by AI that:
+NeuroBridge Tools provides an **adaptive learning environment** powered by AI that:
 
 * Analyzes user learning behavior
 * Provides focus tools
